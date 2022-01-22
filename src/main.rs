@@ -77,8 +77,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         if app.should_quit {
             disable_raw_mode()?;
-            terminal.clear()?;
+            terminal.set_cursor(0, 0)?;
             terminal.show_cursor()?;
+            terminal.clear()?;
             break;
         }
     }
