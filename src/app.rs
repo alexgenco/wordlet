@@ -1,6 +1,6 @@
 use crate::engine::{Game, GameOptions, GameStatus, GuessResult};
 use crate::theme::Theme;
-use crossterm::event::{KeyCode, KeyEvent};
+use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
 #[derive(PartialEq)]
 pub enum Disclaimer {
@@ -40,13 +40,29 @@ impl App {
             return;
         }
 
-        match key.code {
-            KeyCode::Esc => {
+        match key {
+            KeyEvent {
+                code: KeyCode::Esc, ..
+            }
+            | KeyEvent {
+                modifiers: KeyModifiers::CONTROL,
+                code: KeyCode::Char('c'),
+                ..
+            } => {
                 self.should_quit = true;
             }
-            KeyCode::Backspace => self.on_backspace(),
-            KeyCode::Enter => self.on_enter_press(),
-            KeyCode::Char(letter) => self.on_letter_entered(letter),
+            KeyEvent {
+                code: KeyCode::Backspace,
+                ..
+            } => self.on_backspace(),
+            KeyEvent {
+                code: KeyCode::Enter,
+                ..
+            } => self.on_enter_press(),
+            KeyEvent {
+                code: KeyCode::Char(letter),
+                ..
+            } => self.on_letter_entered(letter),
             _ => (),
         };
     }
