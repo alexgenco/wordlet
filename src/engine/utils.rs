@@ -1,19 +1,21 @@
-use crate::engine::words::dictionary_words;
-use rand::seq::SliceRandom;
-use std::collections::{HashMap, HashSet};
+use crate::engine::words::DICTIONARY_WORDS;
+use rand::Rng;
+use std::collections::HashMap;
+use trie_rs::{Trie, TrieBuilder};
 
-pub fn dictionary() -> HashSet<String> {
-    let mut dict = HashSet::new();
-    for w in dictionary_words() {
-        dict.insert(w);
+pub fn dictionary() -> Trie<u8> {
+    let mut dict = TrieBuilder::new();
+    for w in DICTIONARY_WORDS {
+        dict.push(w);
     }
-    dict
+    dict.build()
 }
 
-pub fn get_random_word() -> String {
-    let dict = dictionary();
-    let list = Vec::from_iter(dict.iter());
-    list.choose(&mut rand::thread_rng()).unwrap().to_string()
+pub fn get_random_word() -> &'static str {
+    let mut rng = rand::thread_rng();
+    let i = rng.gen_range(0..DICTIONARY_WORDS.len());
+
+    DICTIONARY_WORDS[i]
 }
 
 pub fn build_letter_counts(word: &str) -> HashMap<char, usize> {

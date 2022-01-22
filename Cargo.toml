@@ -13,3 +13,4 @@ chrono = "0.4"
 crossterm = "0.19"
 tui = { version = "0.14", default-features = false, features = ['crossterm'] }
 rand = "0.8.0"
+trie-rs = "0.1.1"
