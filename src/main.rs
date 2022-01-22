@@ -50,10 +50,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     let mut app = App::new(AppOptions {
-        theme: theme,
+        theme,
         game_config: GameOptions {
             answer: None,
-            difficulty: difficulty,
+            difficulty,
         },
     });
 

@@ -335,7 +335,7 @@ impl Game {
 
         GuessLetter {
             letter: raw_letter,
-            accuracy: accuracy,
+            accuracy,
         }
     }
 
